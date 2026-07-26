@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000 --max-time 3)",
+      "Bash(npm run *)",
+      "Bash(npx eslint *)",
+      "Bash(npm install *)",
+      "Bash(node -e \"console.log\\(require\\('ffmpeg-static'\\)\\)\")",
+      "Bash(node -e \"require.resolve\\('puppeteer-core'\\)\")",
+      "Bash(\"./node_modules/ffmpeg-static/ffmpeg.exe\" -version2)"
+    ]
+  }
+}

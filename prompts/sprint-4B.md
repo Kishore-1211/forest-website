@@ -1,0 +1,13 @@
+# Sprint 4B — Video
+
+## Objective
+
+TODO
+
+## Implementation Prompt
+
+TODO — the full prompt used to run this sprint goes here once it's scoped.
+
+## Notes
+
+TODO
