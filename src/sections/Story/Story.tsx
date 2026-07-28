@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import Image from "next/image";
 import { Container } from "@/components/layout/Container";
+import { ForestScene } from "@/components/forest/ForestScene";
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { SectionDescription } from "@/components/ui/SectionDescription";
 import { SectionTitle } from "@/components/ui/SectionTitle";
@@ -28,8 +28,6 @@ export function Story() {
       if (!targets.length) return;
 
       const enter = fadeInUp({ duration: DURATION.large });
-      const image = root.querySelector<HTMLElement>("[data-parallax]");
-
       const timeline = gsap
         .timeline({
           scrollTrigger: scrollTriggerDefaults(root, {
@@ -52,33 +50,45 @@ export function Story() {
         });
 
       // Gentle parallax drift across the whole pinned duration, in parallel
-      // with the text reveal rather than sequenced with it.
-      if (image) {
-        timeline.fromTo(image, { yPercent: -6 }, { yPercent: 6, ease: "none", duration: timeline.duration() }, 0);
-      }
-    });
+      // with the text reveal rather than sequenced with it. Each forest
+      // layer carries its own `data-parallax` speed (0 = static, 1 = fastest),
+      // set once the total timeline length is known so every layer drifts
+      // over the *entire* pin regardless of how long the text tweens are.
+      const parallaxLayers = root.querySelectorAll<HTMLElement>("[data-parallax]");
+      const pinDuration = timeline.duration();
+
+      parallaxLayers.forEach((layer) => {
+        const speed = parseFloat(layer.dataset.parallax ?? "0");
+        if (!speed) return;
+
+        timeline.fromTo(
+          layer,
+          { yPercent: 0 },
+          {
+            yPercent: -20 * speed,
+            ease: "none",
+            duration: pinDuration,
+          },
+          0, // start at the same point as the text reveal, not after it
+        );
+      });
+    }); // <-- closes addToContext()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // <-- closes useEffect()
 
   return (
     <div ref={ref}>
       <SectionContainer id="story" background="deep-forest">
+        <ForestScene />
         {/*
           Rendered directly here (not via SectionContainer's backgroundImage
           prop) so the timeline above can target it by ref for parallax —
           that prop only supports a static, unanimated background.
         */}
-        <Image
-          data-parallax
-          src="/images/story.avif"
-          alt="A walking path through a peaceful forest"
-          fill
-          sizes="100vw"
-          className="absolute inset-0 -z-20 object-cover"
-        />
-        <div className="absolute inset-0 -z-10 bg-deep-forest/40" aria-hidden />
-        <div className="relative">
+   
+        <div className="absolute inset-0 z-10 bg-deep-forest/40" aria-hidden />
+        <div className="relative z-20">
           <Container narrow>
             <div className="flex flex-col gap-6">
               <SectionTitle id="story-title">A Story Older Than the Trees</SectionTitle>

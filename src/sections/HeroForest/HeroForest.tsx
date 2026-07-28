@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/Button";
 import { SectionDescription } from "@/components/ui/SectionDescription";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { FrameSequence, FrameSequenceHandle } from "@/components/common/FrameSequence";
 import { DURATION, fadeIn, fadeInUp, scrollTriggerDefaults } from "@/lib/animation";
 import { useReveal } from "@/hooks/useReveal";
 
 export function HeroForest() {
   const { ref, prefersReducedMotion, addToContext } = useReveal<HTMLDivElement>();
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const frameSequenceRef = useRef<FrameSequenceHandle>(null);
 
   useEffect(() => {
     const root = ref.current;
@@ -43,20 +44,17 @@ export function HeroForest() {
         ScrollTrigger.create(
           scrollTriggerDefaults(root, {
             start: "top top",
-            end: "+=100%",
+            end: "+=800%",
             pin: true,
-            scrub: 1,
+            scrub: 3,
             // Scrubs the cinematic video's playback position to scroll
             // progress, per ASSETS.md's "scroll-controlled opening
             // sequence." No-ops safely while hero-cinematic.{webm,mp4}
             // doesn't exist yet — duration is NaN, so the assignment is
             // skipped rather than erroring.
-            onUpdate: (self) => {
-              const video = videoRef.current;
-              if (video && video.duration) {
-                video.currentTime = self.progress * video.duration;
-              }
-            },
+           onUpdate: (self) => {
+  frameSequenceRef.current?.setProgress(self.progress);
+},
           }),
         );
       }
@@ -80,17 +78,12 @@ export function HeroForest() {
           renders first, so this sits above it once its metadata loads.
           Scrubbed by the ScrollTrigger above, not autoplaying/looping.
         */}
-        <video
-          ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover"
-          muted
-          playsInline
-          preload="metadata"
-          aria-hidden
-        >
-          <source src="/videos/hero-cinematic.webm" type="video/webm" />
-          <source src="/videos/hero-cinematic.mp4" type="video/mp4" />
-        </video>
+        <FrameSequence
+  ref={frameSequenceRef}
+  folder="/frames"
+  frameCount={480}
+  className="absolute inset-0 h-full w-full object-cover"
+/>
         {/*
           `relative` here isn't just for layout — an absolutely-positioned
           sibling (the video) paints above static in-flow content by default
