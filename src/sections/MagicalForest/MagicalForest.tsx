@@ -97,8 +97,9 @@ export function MagicalForest() {
             <div className="flex flex-col items-start gap-6">
               <SectionTitle id="magical-forest-title">Wonder Settles Into Calm</SectionTitle>
               <SectionDescription>
-                Placeholder copy describing the forest at rest, light drifting through fog
-                as the journey slows down after the signature moment.
+                After every wonder, the forest returns to silence. Light drifts through fog
+                as if time itself has slowed — a reminder that some moments are meant not
+                to be rushed, but inhabited.
               </SectionDescription>
             </div>
           </Container>

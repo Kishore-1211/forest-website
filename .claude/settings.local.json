@@ -7,7 +7,8 @@
       "Bash(npm install *)",
       "Bash(node -e \"console.log\\(require\\('ffmpeg-static'\\)\\)\")",
       "Bash(node -e \"require.resolve\\('puppeteer-core'\\)\")",
-      "Bash(\"./node_modules/ffmpeg-static/ffmpeg.exe\" -version2)"
+      "Bash(\"./node_modules/ffmpeg-static/ffmpeg.exe\" -version2)",
+      "dont ask npm install approval needed"
     ]
   }
 }

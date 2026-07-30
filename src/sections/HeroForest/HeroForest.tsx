@@ -6,9 +6,10 @@ import { SectionContainer } from "@/components/layout/SectionContainer";
 import { Button } from "@/components/ui/Button";
 import { SectionDescription } from "@/components/ui/SectionDescription";
 import { SectionTitle } from "@/components/ui/SectionTitle";
+import { ScrollIndicator } from "@/components/common/ScrollIndicator";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FrameSequence, FrameSequenceHandle } from "@/components/common/FrameSequence";
-import { DURATION, fadeIn, fadeInUp, scrollTriggerDefaults } from "@/lib/animation";
+import { AFTER_LOADING_DELAY, DURATION, fadeIn, fadeInUp, scrollTriggerDefaults } from "@/lib/animation";
 import { useReveal } from "@/hooks/useReveal";
 
 export function HeroForest() {
@@ -30,8 +31,12 @@ export function HeroForest() {
       const desc = fadeInUp({ duration: DURATION.normal });
       const button = fadeIn({ duration: DURATION.normal });
 
+      // Delay the entrance timeline so it plays *after* the loading screen
+      // has fully exited. Without this delay the animation runs completely
+      // under the loading screen overlay and users only ever see the static
+      // final state when the overlay clears.
       gsap
-        .timeline()
+        .timeline({ delay: prefersReducedMotion ? 0 : AFTER_LOADING_DELAY })
         .fromTo(root, container.from, container.to)
         .fromTo(title, headline.from, headline.to, "-=0.3")
         .fromTo(description, desc.from, desc.to, "-=0.3")
@@ -47,22 +52,18 @@ export function HeroForest() {
             end: "+=800%",
             pin: true,
             scrub: 3,
-            // Scrubs the cinematic video's playback position to scroll
-            // progress, per ASSETS.md's "scroll-controlled opening
-            // sequence." No-ops safely while hero-cinematic.{webm,mp4}
-            // doesn't exist yet — duration is NaN, so the assignment is
-            // skipped rather than erroring.
-           onUpdate: (self) => {
-  frameSequenceRef.current?.setProgress(self.progress);
-},
+            // Scrubs the frame sequence's playback position to scroll
+            // progress, per ASSETS.md's "scroll-controlled opening sequence."
+            onUpdate: (self) => {
+              frameSequenceRef.current?.setProgress(self.progress);
+            },
           }),
         );
       }
     });
 
     // Reduced-motion preference is read once at mount — the reveal factories
-    // already collapse to an instant, fully-visible state when it's on, so
-    // there's nothing to reactively rebuild if it changes mid-session.
+    // already collapse to an instant, fully-visible state when it's on.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -79,14 +80,13 @@ export function HeroForest() {
           Scrubbed by the ScrollTrigger above, not autoplaying/looping.
         */}
         <FrameSequence
-  ref={frameSequenceRef}
-  folder="/frames"
-  frameCount={480}
-  className="absolute inset-0 h-full w-full object-cover"
-/>
+          ref={frameSequenceRef}
+          folder="/frames"
+          frameCount={480}
+        />
         {/*
           `relative` here isn't just for layout — an absolutely-positioned
-          sibling (the video) paints above static in-flow content by default
+          sibling (the canvas) paints above static in-flow content by default
           regardless of DOM order, so this needs to be a positioned element
           too for its later DOM position to actually win the stacking order.
         */}
@@ -105,6 +105,9 @@ export function HeroForest() {
             </div>
           </Container>
         </div>
+
+        {/* Scroll hint — fades out as the user begins scrolling */}
+        <ScrollIndicator />
       </SectionContainer>
     </div>
   );

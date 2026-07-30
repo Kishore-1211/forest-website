@@ -57,7 +57,7 @@ export function SquirrelScene() {
 
   return (
     <div ref={ref}>
-      <SectionContainer id="squirrel-scene" background="charcoal">
+      <SectionContainer id="squirrel-scene" background="deep-forest">
         <div ref={canvasHostRef} className="absolute inset-0">
           {isInView && <SquirrelCanvas progressRef={progressRef} />}
         </div>

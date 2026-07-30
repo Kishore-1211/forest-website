@@ -93,16 +93,15 @@ export function Story() {
             <div className="flex flex-col gap-6">
               <SectionTitle id="story-title">A Story Older Than the Trees</SectionTitle>
               <SectionDescription>
-                Placeholder paragraph one describing the origin of the forest and why this
-                journey exists. Final narrative copy will replace this text.
+                Long before roads were drawn through these hills, the forest was already ancient.
+                It grew in silence, season by season, indifferent to everything beyond its canopy.
               </SectionDescription>
               <SectionDescription>
-                Placeholder paragraph two continuing the narrative thread, setting up what
-                the visitor is about to encounter deeper in the scroll.
+                Each ring of bark records a year the world never noticed. A fallen branch becomes
+                shelter. A clearing becomes a stage for light. Nothing here is wasted.
               </SectionDescription>
               <SectionDescription>
-                Placeholder paragraph three, closing this section before the visitor
-                continues into the signature moment ahead.
+                This journey follows no map. The only direction is deeper.
               </SectionDescription>
             </div>
           </Container>

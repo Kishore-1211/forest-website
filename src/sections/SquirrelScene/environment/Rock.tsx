@@ -1,15 +1,53 @@
 "use client";
 
-/**
- * PLACEHOLDER GEOMETRY — stands in for ASSETS.md's `rock.glb`. Swap for a
- * `useGLTF("/models/rock.glb")` result once that file exists in
- * `public/models/`.
- */
-export function Rock() {
+import { useEffect, useMemo } from "react";
+import { useGLTF } from "@react-three/drei";
+import * as THREE from "three";
+
+const MODEL_PATH = "/models/rock.glb";
+const TARGET_HEIGHT = 0.35;
+
+interface RockProps {
+  position?: [number, number, number];
+}
+
+export function Rock({ position = [0.5, 0, 0.6] }: RockProps) {
+  const { scene } = useGLTF(MODEL_PATH);
+
+  const { scale, offset } = useMemo(() => {
+    const box = new THREE.Box3().setFromObject(scene);
+    const boxSize = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    box.getSize(boxSize);
+    box.getCenter(center);
+    const fitScale = boxSize.y > 0 ? TARGET_HEIGHT / boxSize.y : 1;
+    return {
+      scale: fitScale,
+      offset: new THREE.Vector3(-center.x, -box.min.y, -center.z),
+    };
+  }, [scene]);
+
+  useEffect(() => {
+    scene.traverse((obj) => {
+      const mesh = obj as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      materials.forEach((mat) => {
+        const std = mat as THREE.MeshStandardMaterial;
+        if (std.map) std.map.colorSpace = THREE.SRGBColorSpace;
+      });
+    });
+  }, [scene]);
+
   return (
-    <mesh position={[1.1, 0.25, 0.6]} rotation={[0.3, 0.5, 0]} castShadow receiveShadow>
-      <dodecahedronGeometry args={[0.35, 0]} />
-      <meshStandardMaterial color="#6B6B5E" roughness={1} />
-    </mesh>
+    <group position={position}>
+      <group position={offset} scale={scale}>
+        <primitive object={scene} />
+      </group>
+    </group>
   );
 }
+
+useGLTF.preload(MODEL_PATH);

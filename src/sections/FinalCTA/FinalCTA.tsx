@@ -59,8 +59,8 @@ export function FinalCTA() {
           <div className="flex flex-col items-start gap-6">
             <SectionTitle id="final-cta-title">Begin Your Own Journey</SectionTitle>
             <SectionDescription>
-              Placeholder copy inviting the visitor to take the next step, closing the
-              story with one clear action.
+              The forest is patient. It waits for those willing to slow down, look closer,
+              and step off the path. Your journey begins here.
             </SectionDescription>
             <div data-cta className="flex flex-col gap-4 sm:flex-row">
               <Button variant="primary">Explore Forest</Button>

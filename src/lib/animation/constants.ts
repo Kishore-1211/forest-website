@@ -25,3 +25,11 @@ export const REVEAL_DISTANCE = 24;
 
 /** Default stagger between items in a revealed group. */
 export const STAGGER = 0.15;
+
+/**
+ * Seconds to wait before playing any post-load entrance animation.
+ * Derived from: LoadingScreen DISPLAY_DURATION (1.5s) + DURATION.normal fade-out (0.6s) + 0.1s buffer.
+ * Components that animate in after the loading screen exits (Navbar, HeroForest) use this constant
+ * so the timing stays in sync if DISPLAY_DURATION ever changes.
+ */
+export const AFTER_LOADING_DELAY = 2.2;

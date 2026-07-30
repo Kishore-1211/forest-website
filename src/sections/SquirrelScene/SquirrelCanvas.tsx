@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Preload } from "@react-three/drei";
@@ -18,6 +18,24 @@ export interface SquirrelCanvasProps {
    * every scroll tick; reading it in useFrame avoids a React re-render per
    * scroll event (see requirement: avoid unnecessary re-renders). */
   progressRef: RefObject<ScrollProgress>;
+}
+
+/** Sets the Three.js scene background to a forest image texture. */
+function ForestBackground() {
+  const { scene } = useThree();
+
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+    loader.load("/images/magic.webp", (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      scene.background = texture;
+    });
+    return () => {
+      scene.background = null;
+    };
+  }, [scene]);
+
+  return null;
 }
 
 /**
@@ -38,8 +56,9 @@ export function SquirrelCanvas({ progressRef }: SquirrelCanvasProps) {
       gl={{ antialias: true }}
       camera={{ position: [0, 1.4, 4], fov: 45 }}
     >
+      <ForestBackground />
       {/* Warm, golden-hour-leaning atmosphere per DESIGN_SYSTEM.md. */}
-      <fog attach="fog" args={["#C8D0C8", 4, 12]} />
+      <fog attach="fog" args={["#8BA888", 5, 14]} />
 
       {/* Fill: low ambient so shadowed faces never crush to pure black. */}
       <ambientLight intensity={0.3} color="#C8D0C8" />
@@ -59,8 +78,12 @@ export function SquirrelCanvas({ progressRef }: SquirrelCanvasProps) {
       <directionalLight position={[-1.5, 2.4, -3]} intensity={0.85} color="#F7F7F2" />
 
       <Ground />
-      <Tree />
-      <Rock />
+      <Suspense fallback={null}>
+        <Tree />
+      </Suspense>
+      <Suspense fallback={null}>
+        <Rock />
+      </Suspense>
       <Suspense fallback={null}>
         <Squirrel onReady={handleReady} />
       </Suspense>

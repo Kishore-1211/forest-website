@@ -149,6 +149,12 @@ export function ForestScene() {
         />
       </div>
 
+      {/* Fog — renders at z-[35]/z-[36] between trees-back and tree-mid,
+          sitting in the mid-ground where volumetric fog naturally lives.
+          No data-parallax because fog is diffuse and doesn't track depth
+          the way solid tree layers do — it holds position while the trees shift. */}
+      <FogLayer />
+
       {/* Warm Grade — ties sky/rays/trees into one golden-hour cast instead
           of each layer showing its own independent tone. Sits above every
           image layer but below the cinematic vignette below. */}

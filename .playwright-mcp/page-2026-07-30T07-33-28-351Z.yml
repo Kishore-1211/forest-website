@@ -1,0 +1,69 @@
+- generic [active] [ref=f2e1]:
+  - link "Skip to main content" [ref=f2e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - navigation "Main navigation" [ref=f2e3]:
+    - generic [ref=f2e4]:
+      - link "Forest — return to top" [ref=f2e5] [cursor=pointer]:
+        - /url: "#hero-forest"
+        - text: Forest
+      - list [ref=f2e6]:
+        - listitem [ref=f2e7]:
+          - link "Story" [ref=f2e8] [cursor=pointer]:
+            - /url: "#story"
+        - listitem [ref=f2e9]:
+          - link "The Moment" [ref=f2e10] [cursor=pointer]:
+            - /url: "#squirrel-scene"
+        - listitem [ref=f2e11]:
+          - link "Magic" [ref=f2e12] [cursor=pointer]:
+            - /url: "#magical-forest"
+      - link "Begin" [ref=f2e13] [cursor=pointer]:
+        - /url: "#final-cta"
+  - main [ref=f2e19]:
+    - region [ref=f2e22]:
+      - img "Golden-hour sunlight through forest trees" [ref=f2e23]
+      - generic [ref=f2e28]:
+        - heading "Walk Into the Forest" [level=1] [ref=f2e29]
+        - paragraph [ref=f2e30]: A cinematic journey through a living forest, told one scroll at a time.
+        - button "Begin the Journey" [ref=f2e32]
+      - generic: Scroll
+    - region [ref=f2e35]:
+      - generic [ref=f2e39]:
+        - heading "A Story Older Than the Trees" [level=2] [ref=f2e40]
+        - paragraph [ref=f2e41]: Long before roads were drawn through these hills, the forest was already ancient. It grew in silence, season by season, indifferent to everything beyond its canopy.
+        - paragraph [ref=f2e42]: Each ring of bark records a year the world never noticed. A fallen branch becomes shelter. A clearing becomes a stage for light. Nothing here is wasted.
+        - paragraph [ref=f2e43]: This journey follows no map. The only direction is deeper.
+    - region [ref=f2e46]:
+      - img "Misty forest with golden light rays" [ref=f2e47]
+      - generic [ref=f2e52]:
+        - heading "The Signature Moment" [level=2] [ref=f2e53]
+        - paragraph [ref=f2e54]: Meet the forest’s quiet resident, rendered live in real time.
+    - region [ref=f2e56]:
+      - img "Light rays and soft mist through the forest canopy" [ref=f2e57]
+      - generic [ref=f2e62]:
+        - heading "Wonder Settles Into Calm" [level=2] [ref=f2e63]
+        - paragraph [ref=f2e64]: After every wonder, the forest returns to silence. Light drifts through fog as if time itself has slowed — a reminder that some moments are meant not to be rushed, but inhabited.
+    - region [ref=f2e66]:
+      - img "A bright forest clearing opening ahead" [ref=f2e67]
+      - generic [ref=f2e70]:
+        - heading "Begin Your Own Journey" [level=2] [ref=f2e71]
+        - paragraph [ref=f2e72]: The forest is patient. It waits for those willing to slow down, look closer, and step off the path. Your journey begins here.
+        - generic [ref=f2e73]:
+          - button "Explore Forest" [ref=f2e74]
+          - button "Learn More" [ref=f2e75]
+    - generic [ref=f2e77]:
+      - generic [ref=f2e78]:
+        - generic [ref=f2e79]: Forest
+        - navigation "Footer" [ref=f2e80]:
+          - list [ref=f2e81]:
+            - listitem [ref=f2e82]:
+              - link "About" [ref=f2e83] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e84]:
+              - link "Contact" [ref=f2e85] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e86]:
+              - link "Privacy" [ref=f2e87] [cursor=pointer]:
+                - /url: "#"
+      - paragraph [ref=f2e88]: © 2026 Forest. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=f2e94] [cursor=pointer]
+  - alert [ref=f2e98]
