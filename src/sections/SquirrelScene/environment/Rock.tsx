@@ -12,7 +12,11 @@ interface RockProps {
 }
 
 export function Rock({ position = [0.5, 0, 0.6] }: RockProps) {
-  const { scene } = useGLTF(MODEL_PATH);
+  // Third arg enables the meshopt decoder: the GLB ships with
+  // EXT_meshopt_compression from scripts/optimize-models.mjs, and without this
+  // the loader throws on the unsupported extension. The decoder is bundled in
+  // `three`, so this pulls in no network request.
+  const { scene } = useGLTF(MODEL_PATH, false, true);
 
   const { scale, offset } = useMemo(() => {
     const box = new THREE.Box3().setFromObject(scene);
@@ -50,4 +54,4 @@ export function Rock({ position = [0.5, 0, 0.6] }: RockProps) {
   );
 }
 
-useGLTF.preload(MODEL_PATH);
+useGLTF.preload(MODEL_PATH, false, true);

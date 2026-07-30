@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Pristine model sources kept for re-running scripts/optimize-models.mjs.
+# Large and derivable — the optimized .glb files are what ship.
+public/models/*.orig.glb

@@ -48,7 +48,8 @@ export function Squirrel({ position = [-0.6, 0, 1], onReady }: SquirrelProps) {
   const breathRef = useRef<Group>(null);
   const animRef = useRef<Group>(null);
 
-  const { scene, animations } = useGLTF(MODEL_PATH);
+  // Meshopt decoder — see the note in environment/Rock.tsx.
+  const { scene, animations } = useGLTF(MODEL_PATH, false, true);
   const { actions } = useAnimations(animations, animRef);
   const prefersReducedMotion = useReducedMotion();
 
@@ -178,4 +179,4 @@ export function Squirrel({ position = [-0.6, 0, 1], onReady }: SquirrelProps) {
   );
 }
 
-useGLTF.preload(MODEL_PATH);
+useGLTF.preload(MODEL_PATH, false, true);

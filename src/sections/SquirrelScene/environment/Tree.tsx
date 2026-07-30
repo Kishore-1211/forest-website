@@ -12,7 +12,8 @@ interface TreeProps {
 }
 
 export function Tree({ position = [1.2, -1.4, -0.2] }: TreeProps) {
-  const { scene } = useGLTF(MODEL_PATH);
+  // Meshopt decoder — see the note in Rock.tsx.
+  const { scene } = useGLTF(MODEL_PATH, false, true);
 
   const { scale, offset } = useMemo(() => {
     const box = new THREE.Box3().setFromObject(scene);
@@ -50,4 +51,4 @@ export function Tree({ position = [1.2, -1.4, -0.2] }: TreeProps) {
   );
 }
 
-useGLTF.preload(MODEL_PATH);
+useGLTF.preload(MODEL_PATH, false, true);
