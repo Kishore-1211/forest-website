@@ -79,10 +79,12 @@ export function HeroForest() {
           renders first, so this sits above it once its metadata loads.
           Scrubbed by the ScrollTrigger above, not autoplaying/looping.
         */}
+        {/* 192 = frames.mp4's real frame count (8s @ 24fps). Must stay in sync
+            with FRAME_COUNT in scripts/extract-frames.mjs. */}
         <FrameSequence
           ref={frameSequenceRef}
           folder="/frames"
-          frameCount={480}
+          frameCount={192}
         />
         {/*
           `relative` here isn't just for layout — an absolutely-positioned

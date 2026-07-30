@@ -91,20 +91,30 @@ export const FrameSequence = forwardRef<
     const PRIORITY_FRAMES = Math.min(60, frameCount);
     for (let i = 1; i <= PRIORITY_FRAMES; i++) loadFrame(i);
 
-    // Remaining frames via requestIdleCallback so they don't block the main
-    // thread during the initial render, but arrive as fast as the network allows.
+    // Remaining frames during idle time so they don't block the main thread
+    // during the initial render, but arrive as fast as the network allows.
+    // requestIdleCallback is unavailable on Safari before 16.4, where calling it
+    // unguarded would throw and abort this effect — losing every frame past the
+    // priority batch — so fall back to a timeout there.
+    const hasIdleCallback = typeof requestIdleCallback === "function";
+    const schedule = (fn: () => void) =>
+      hasIdleCallback ? requestIdleCallback(fn) : window.setTimeout(fn, 1);
+    const cancel = (id: number) =>
+      hasIdleCallback ? cancelIdleCallback(id) : window.clearTimeout(id);
+
     const idleIds: number[] = [];
     const IDLE_BATCH = 30;
     for (let b = 0; b < Math.ceil((frameCount - PRIORITY_FRAMES) / IDLE_BATCH); b++) {
       const start = PRIORITY_FRAMES + b * IDLE_BATCH + 1;
       const end = Math.min(PRIORITY_FRAMES + (b + 1) * IDLE_BATCH, frameCount);
-      const id = requestIdleCallback(() => {
-        for (let i = start; i <= end; i++) loadFrame(i);
-      });
-      idleIds.push(id);
+      idleIds.push(
+        schedule(() => {
+          for (let i = start; i <= end; i++) loadFrame(i);
+        }),
+      );
     }
 
-    return () => idleIds.forEach(cancelIdleCallback);
+    return () => idleIds.forEach(cancel);
   }, [folder, frameCount]);
 
   return (

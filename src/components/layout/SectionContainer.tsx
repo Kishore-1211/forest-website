@@ -48,7 +48,13 @@ export function SectionContainer({
       data-section={id}
       aria-labelledby={`${id}-title`}
       className={cn(
-        "relative flex min-h-screen flex-col justify-center overflow-hidden py-16 md:py-24 lg:py-32",
+        // `isolate` is load-bearing, not cosmetic: it makes this section its own
+        // stacking context so the negative-z `backgroundImage`/scrim below stay
+        // *inside* it. Without it, `position: relative; z-index: auto` is not a
+        // stacking context, so those children escape to the nearest ancestor one
+        // where negative z-index paints before in-flow block backgrounds — and
+        // this section's own `tone.bg` would paint straight over the photo.
+        "relative isolate flex min-h-screen flex-col justify-center overflow-hidden py-16 md:py-24 lg:py-32",
         tone.bg,
         tone.fg,
         className,
