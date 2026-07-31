@@ -155,15 +155,17 @@ export function ForestScene() {
           the way solid tree layers do — it holds position while the trees shift. */}
       <FogLayer />
 
-      {/* Warm Grade — ties sky/rays/trees into one golden-hour cast instead
-          of each layer showing its own independent tone. Sits above every
-          image layer but below the cinematic vignette below. */}
+      {/* Cool Grade — ties sky/rays/trees into one dawn-mist cast instead of
+          each layer showing its own independent tone. This was a warm amber
+          wash, which fought the section's cool tone and left the whole scene
+          reading as undifferentiated green. Sits above every image layer but
+          below the cinematic vignette below. */}
       <div
         className="
           absolute
           inset-0
           z-[65]
-          bg-amber-400/10
+          bg-dawn-mist/25
           mix-blend-overlay
         "
       />

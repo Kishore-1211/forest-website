@@ -10,6 +10,15 @@
   --charcoal: #1b1b1b;
   --fog-gray: #c8d0c8;
 
+  /* Time-of-day tones. DESIGN_SYSTEM.md's theme is "Living Forest at Golden
+     Hour", but the palette above only spans the green end, so every section
+     after the hero landed on the same note. These are desaturated neutrals in
+     the same family — a dawn/golden-hour/dusk arc that lets the journey move
+     cool -> warm -> cool instead of sitting on one colour. */
+  --dawn-mist: #26333c;
+  --golden-earth: #2b2018;
+  --dusk-violet: #232030;
+
   --background: var(--charcoal);
   --foreground: var(--soft-white);
 }
@@ -25,6 +34,10 @@
   --color-soft-white: var(--soft-white);
   --color-charcoal: var(--charcoal);
   --color-fog-gray: var(--fog-gray);
+
+  --color-dawn-mist: var(--dawn-mist);
+  --color-golden-earth: var(--golden-earth);
+  --color-dusk-violet: var(--dusk-violet);
 
   /* DESIGN_SYSTEM.md > Border Radius (button pill uses Tailwind's built-in rounded-full) */
   --radius-card: 20px;

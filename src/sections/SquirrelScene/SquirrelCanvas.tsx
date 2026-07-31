@@ -57,27 +57,42 @@ export function SquirrelCanvas({ progressRef }: SquirrelCanvasProps) {
       camera={{ position: [0, 1.4, 4], fov: 45 }}
     >
       <ForestBackground />
-      {/* Warm, golden-hour-leaning atmosphere per DESIGN_SYSTEM.md. */}
-      <fog attach="fog" args={["#8BA888", 5, 14]} />
+      {/* Warm haze rather than the previous green (#8BA888), which tinted the
+          whole scene and made it read as one flat green mass with the ground.
+          The colour is sampled from the backdrop image's own horizon band
+          (~#5a4b36), lifted slightly for atmosphere: any lighter and the ground
+          fades to a bright strip that reads as a hard seam against the darker
+          photo behind it. */}
+      <fog attach="fog" args={["#66563E", 6, 16]} />
 
-      {/* Fill: low ambient so shadowed faces never crush to pure black. */}
-      <ambientLight intensity={0.3} color="#C8D0C8" />
-      {/* Key: warm golden-hour sun, the primary shadow-casting light. */}
+      {/* Fill: ambient carries the shadowed half of the ground. Raised from
+          0.32 — with a single low, raking key the floor's shadow side and the
+          tree's cast shadow otherwise read as flat black holes. */}
+      <ambientLight intensity={0.62} color="#A89880" />
+      {/* Key: golden-hour sun. Dropped nearer the horizon than the previous
+          [3,5,2] so it rakes across the ground and its displacement actually
+          casts visible relief instead of lighting the floor evenly. */}
       <directionalLight
-        position={[3, 5, 2]}
-        intensity={1.7}
-        color="#D4A017"
+        position={[4.2, 2.4, 2.2]}
+        intensity={2.0}
+        // Softer than the palette's raw #D4A017: at this intensity a fully
+        // saturated gold pushed the whole floor to orange clay.
+        color="#E8C889"
         castShadow
         shadow-mapSize={[2048, 2048]}
         shadow-bias={-0.0004}
       />
-      {/* Fill: cool bounce light from the opposite side, no shadow of its
-          own (avoids a second, competing shadow direction). */}
-      <directionalLight position={[-3, 1.6, 1]} intensity={0.35} color="#C8D0C8" />
+      {/* Fill: cool sky bounce from the opposite side — the cool/warm split is
+          what keeps a warm scene from flattening into a single tone. No shadow
+          of its own (avoids a second, competing shadow direction). */}
+      <directionalLight position={[-3, 1.6, 1]} intensity={0.4} color="#7C8CA8" />
       {/* Rim: soft backlight separating the squirrel from the forest behind it. */}
-      <directionalLight position={[-1.5, 2.4, -3]} intensity={0.85} color="#F7F7F2" />
+      <directionalLight position={[-1.5, 2.4, -3]} intensity={0.9} color="#F7F7F2" />
 
-      <Ground />
+      {/* Suspense: Ground now loads a texture, so it suspends like the models. */}
+      <Suspense fallback={null}>
+        <Ground />
+      </Suspense>
       <Suspense fallback={null}>
         <Tree />
       </Suspense>

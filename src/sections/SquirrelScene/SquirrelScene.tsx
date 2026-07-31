@@ -57,7 +57,10 @@ export function SquirrelScene() {
 
   return (
     <div ref={ref}>
-      <SectionContainer id="squirrel-scene" background="deep-forest">
+      {/* Golden hour — the warm peak of the arc, and the section this page is
+          built around. Mostly sits behind the canvas, but it sets the tone for
+          the letterboxed edges and the scrim. */}
+      <SectionContainer id="squirrel-scene" background="golden-earth">
         <div ref={canvasHostRef} className="absolute inset-0">
           {isInView && <SquirrelCanvas progressRef={progressRef} />}
         </div>

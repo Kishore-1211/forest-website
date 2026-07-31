@@ -63,7 +63,10 @@ export function MagicalForest() {
 
   return (
     <div ref={ref}>
-      <SectionContainer id="magical-forest" background="forest-green">
+      {/* Dusk — cools back down after the golden-hour peak, so the bright
+          soft-white CTA that follows lands as daybreak rather than more of the
+          same. */}
+      <SectionContainer id="magical-forest" background="dusk-violet">
         {/*
           Rendered directly (not via SectionContainer's backgroundImage
           prop) so it can be targeted for parallax — that prop is
@@ -78,7 +81,7 @@ export function MagicalForest() {
           sizes="100vw"
           className="absolute inset-0 -z-20 object-cover"
         />
-        <div className="absolute inset-0 -z-10 bg-forest-green/40" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-dusk-violet/45" aria-hidden />
         <video
           className="absolute inset-0 h-full w-full object-cover"
           muted
@@ -91,6 +94,17 @@ export function MagicalForest() {
           <source src="/videos/magic-fog.webm" type="video/webm" />
           <source src="/videos/magic-fog.mp4" type="video/mp4" />
         </video>
+        {/*
+          Dusk grade. The scrim above sits at -z-10, below this full-bleed
+          video, so it can't tone the section's dominant visual — without this
+          the video plays at its own neutral-green cast regardless of the
+          section tone. Positioned (not negative-z) and placed after the video
+          but before the copy, so it grades the video and leaves text legible.
+        */}
+        <div
+          className="absolute inset-0 bg-dusk-violet/35 mix-blend-multiply"
+          aria-hidden
+        />
         {/* `relative` so this stacks above the video sibling — see the same note in HeroForest.tsx. */}
         <div className="relative">
           <Container>

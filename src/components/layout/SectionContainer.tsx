@@ -2,7 +2,15 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 
-export type SectionBackground = "charcoal" | "deep-forest" | "forest-green" | "soft-white";
+export type SectionBackground =
+  | "charcoal"
+  | "deep-forest"
+  | "forest-green"
+  | "soft-white"
+  /* Time-of-day tones — see the note beside these tokens in globals.css. */
+  | "dawn-mist"
+  | "golden-earth"
+  | "dusk-violet";
 
 /**
  * Centralizes background/foreground pairing so an invalid combination
@@ -15,6 +23,9 @@ const TONE: Record<SectionBackground, { bg: string; fg: string; scrim: string }>
   "deep-forest": { bg: "bg-deep-forest", fg: "text-soft-white", scrim: "bg-deep-forest/40" },
   "forest-green": { bg: "bg-forest-green", fg: "text-soft-white", scrim: "bg-forest-green/40" },
   "soft-white": { bg: "bg-soft-white", fg: "text-charcoal", scrim: "bg-soft-white/50" },
+  "dawn-mist": { bg: "bg-dawn-mist", fg: "text-soft-white", scrim: "bg-dawn-mist/40" },
+  "golden-earth": { bg: "bg-golden-earth", fg: "text-soft-white", scrim: "bg-golden-earth/40" },
+  "dusk-violet": { bg: "bg-dusk-violet", fg: "text-soft-white", scrim: "bg-dusk-violet/40" },
 };
 
 interface SectionContainerProps {

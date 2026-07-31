@@ -79,7 +79,10 @@ export function Story() {
 
   return (
     <div ref={ref}>
-      <SectionContainer id="story" background="deep-forest">
+      {/* Cool dawn mist — the first beat of the time-of-day arc, deliberately
+          the coolest point so the golden-hour 3D scene that follows reads warm
+          by contrast. */}
+      <SectionContainer id="story" background="dawn-mist">
         <ForestScene />
         {/*
           Rendered directly here (not via SectionContainer's backgroundImage
@@ -87,7 +90,7 @@ export function Story() {
           that prop only supports a static, unanimated background.
         */}
    
-        <div className="absolute inset-0 z-10 bg-deep-forest/40" aria-hidden />
+        <div className="absolute inset-0 z-10 bg-dawn-mist/45" aria-hidden />
         <div className="relative z-20">
           <Container narrow>
             <div className="flex flex-col gap-6">
